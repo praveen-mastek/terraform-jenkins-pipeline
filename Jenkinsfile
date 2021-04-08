@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            label 'master'
+            label 'main'
         }
     }
 
@@ -14,7 +14,7 @@ pipeline {
         }
         stage('git clone') {
             steps {
-                sh 'sudo rm -r *;sudo git clone https://github.com/praveen-mastek/terraform-jenkins-pipeline.git'
+                sh 'sudo git clone https://github.com/praveen-mastek/terraform-jenkins-pipeline.git'
             }
         }
         stage('terraform init') {
