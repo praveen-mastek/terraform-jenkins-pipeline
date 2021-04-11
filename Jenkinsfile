@@ -11,12 +11,12 @@ pipeline{
         }	
 	stage('Terraform Init'){
 	     steps{
-		  sh lable '', script: 'terraform init'
+		  sh script: "echo foo1", label: "my step1", script: 'terraform init'
 	    }
     	}
 	stage('Terraform apply'){
              steps{
-                  sh lable '', script: 'terraform apply --auto-approve'
+                  sh script: "echo foo2", label: "my step2", script: 'terraform apply --auto-approve'
              }
     	}
     }
