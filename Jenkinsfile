@@ -1,10 +1,7 @@
 pipeline{
     agent any
-    tools{
-        terraform 'Terraform 14.03'
-    }
     stages{
-        stage ('Git Checkout'){
+        stage('Git Checkout'){
             steps{
                 git branch: 'main', credentialsId: 'git-praveen', url: 'https://github.com/praveen-mastek/terraform-jenkins-pipeline/' 
             }
@@ -13,11 +10,6 @@ pipeline{
 	     steps{
 		  sh script: 'terraform init'
 	    }
-    	}
-	stage('Terraform apply'){
-             steps{
-                  sh script: 'terraform apply --auto-approve'
-             }
     	}
     }
 }
