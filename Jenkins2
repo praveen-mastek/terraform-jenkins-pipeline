@@ -1,6 +1,6 @@
 def myVar = 'initial_value'
 pipeline {
-  agent { label 'docker' }
+  agent none
   stages {
     stage('one') {
       steps {
