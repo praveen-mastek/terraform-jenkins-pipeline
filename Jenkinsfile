@@ -15,8 +15,8 @@ pipeline {
 
     stages {
         stage('Checkout'){
-         git branch: 'main', credentialsId: 'git-praveen', url: 'https://github.com/praveen-mastek/terraform-jenkins-pipeline/'
-        }
+         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-praveen', url: 'https://github.com/praveen-mastek/terraform-jenkins-pipeline.git']]])
+         }
         stage('Plan') {
             steps {
                 script {
