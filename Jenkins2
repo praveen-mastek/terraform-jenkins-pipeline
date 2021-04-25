@@ -1,5 +1,5 @@
-pipeline {
 def myVar = 'initial_value'
+pipeline {
   agent { label 'docker' }
   stages {
     stage('one') {
