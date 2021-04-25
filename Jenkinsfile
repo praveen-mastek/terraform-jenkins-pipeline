@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     currentBuild.displayName = params.version
-                    echo "$urrentBuild.displayName"
+                    echo "$currentBuild.displayName"
                 }
                 sh 'pwd'
                 sh 'terraform init -input=false'
