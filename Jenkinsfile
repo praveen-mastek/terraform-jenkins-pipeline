@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+def plan = readFile 'tfplan.txt'
     parameters {
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
         string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
