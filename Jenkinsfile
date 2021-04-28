@@ -23,7 +23,7 @@ pipeline {
                         }
                   }
                 }
-               ]
+          }
         stage('Approval') {
             when {
                 not {
