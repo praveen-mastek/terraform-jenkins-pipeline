@@ -13,7 +13,7 @@ pipeline {
          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-praveen', url: 'https://github.com/praveen-mastek/terraform-jenkins-pipeline.git']]])
         }
          }
-        stage{
+        stage('Workspace'){
                 steps {
                   script {
                         try {
@@ -23,7 +23,7 @@ pipeline {
                         }
                   }
                 }
-        }
+               ]
         stage('Approval') {
             when {
                 not {
