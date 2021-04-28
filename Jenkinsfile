@@ -1,6 +1,6 @@
 pipeline {
-    agent any
-def plan = readFile 'tfplan.txt'
+    agent none
+//     def plan = readFile 'tfplan.txt'
     parameters {
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
         string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
@@ -13,20 +13,17 @@ def plan = readFile 'tfplan.txt'
          checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-praveen', url: 'https://github.com/praveen-mastek/terraform-jenkins-pipeline.git']]])
         }
          }
-        stage('Plan') {
-            steps {
-                script {
-                    currentBuild.displayName = params.version
-                    echo "Mycurrent version ${currentBuild.displayName}"
+        stage{
+                steps {
+                  script {
+                        try {
+                            sh "terraform workspace new ${params.WORKSPACE}"
+                        } catch (err) {
+                            sh "terraform workspace select ${params.WORKSPACE}"
+                        }
+                  }
                 }
-                sh 'pwd'
-                sh 'terraform init -input=false'
-                sh 'terraform workspace select ${environment}'
-                sh "terraform plan -input=false -out tfplan -var 'version=${params.version}' --var-file=environments/${params.environment}.tfvars"
-                sh 'terraform show -no-color tfplan > tfplan.txt'
-            }
         }
-
         stage('Approval') {
             when {
                 not {
@@ -36,16 +33,10 @@ def plan = readFile 'tfplan.txt'
 
             steps {
                 script {
-                    def plan = readFile 'tfplan.txt'
+                    //def plan = readFile 'tfplan.txt'
                     input message: "Do you want to apply the plan?",
                         parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                 }
-            }
-        }
-
-        stage('Apply') {
-            steps {
-                sh "terraform apply -input=false tfplan"
             }
         }
     }
