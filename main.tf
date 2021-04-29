@@ -8,7 +8,7 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   profile = "default"
-  region = "eu-west-2"
+  region  = "eu-west-2"
 }
 
 # Create an EC2 instance
