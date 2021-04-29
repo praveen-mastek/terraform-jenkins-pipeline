@@ -1,22 +1,18 @@
 terraform {
-  # This module is now only being tested with Terraform 0.14.x. However, to make upgrading easier, we are setting
-  # 0.12.26 as the minimum version, as that version added support for required_providers with source URLs, making it
-  # forwards compatible with 0.14.x code.
-  required_version = ">= 0.14.7"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
 }
 
 # Configure the AWS Provider
 provider "aws" {
-  region  = "eu-west-2"
+  region = "us-east-1"
 }
 
-# Create an EC2 instance
-resource "aws_instance" "example" {
-  # AMI ID for Amazon Linux AMI 2018.03.0 (HVM)
-  ami           = "ami-096cb92bb3580c759"
-  instance_type = "t2.micro"
-
-  tags = {
-    Name = "example"
-  }
+# Create a VPC
+resource "aws_vpc" "example" {
+  cidr_block = "10.0.0.0/16"
 }
